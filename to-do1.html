@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="to-do.css">
+</head>
+<body>
+    <label for="">To-Do List :  
+        <input id="add" type="text">
+    </label>
+    <button onclick="addItem()">Add Item</button>
+
+    <div  id="list_task" class="task_list">
+    </div>
+
+    <!-- hhhhhhhhhh -->
+
+
+    <div class="form-popup" id="myForm">
+        <form class="form-container">  
+          <label for="text"><b>new text</b></label>
+          <input id="update_placeholder" type="text" placeholder="" name="text" required>
+          <!-- <button type="button" class="btn" onclick="updateItem()">edit</button> -->
+          <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+      </div>
+
+    <!-- hhhhhhhhhhhhh -->
+
+    <script>
+        var task_list = []
+
+        function deleteItem(clas){
+            task_list.splice(clas,1)
+            console.log("delete")
+            displayTasks()
+        }
+
+        function updateItem(clas){
+            // document.getElementById('clas').value = 1
+            let pop = 
+            document.getElementById("myForm").style.display = "block";
+            task_list[clas] = document.getElementById('update_placeholder').value
+            displayTasks()
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+            displayTasks()
+        }
+
+
+        function addItem(){
+            let new_task = document.getElementById('add').value;
+            if(!new_task) return;
+            task_list.push(new_task)
+            document.getElementById('add').value = ''
+            displayTasks()
+            console.log(task_list)
+        }
+
+
+
+        function displayTasks(){
+            let html = ''
+            let id = 0;
+            task_list.map((task)=>{
+                html = html + `<div class="item" class="${id}"><p>${task}</p><button class="${id}" onclick="deleteItem(this.className)">delete</button><button class="${id}" onclick="updateItem(this.className)">update</button></div>`
+                id=id+1
+            })
+            document.getElementById('list_task').innerHTML=html;
+        }
+
+
+    </script>
+</body>
+</html>
